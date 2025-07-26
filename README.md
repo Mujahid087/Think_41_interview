@@ -1,4 +1,3 @@
-Sure! Here's a sample `README.md` file for your **Customer Support Chatbot for eCommerce Clothing Site** project using **React.js (frontend)**, **Node.js (backend)**, **MongoDB**, and **Docker (docker-compose)**:
 
 ---
 
