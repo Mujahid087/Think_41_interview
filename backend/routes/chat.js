@@ -3,7 +3,7 @@ const router = express.Router();
 const ChatSession = require('../models/ChatSession');
 const ChatMessage = require('../models/ChatMessage');
 const Order = require('../models/Order');
-const groqLLM = require('../utils/groqLLM');
+const groqLLM = require('../utils/groqLLM.JS');
 
 router.post('/', async (req, res) => {
   try {
@@ -203,6 +203,18 @@ router.get('/test', async (req, res) => {
       success: false,
       error: error.message
     });
+  }
+});
+
+
+router.get('/sessions/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const sessions = await ChatSession.find({ userId }).sort({ createdAt: -1 });
+    res.json(sessions);
+  } catch (err) {
+    console.error('Error fetching sessions:', err);
+    res.status(500).json({ error: 'Failed to fetch sessions' });
   }
 });
 
