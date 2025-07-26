@@ -1,50 +1,71 @@
 const express = require('express');
 const router = express.Router();
-const ChatUser = require('../models/ChatUser');
 const ChatSession = require('../models/ChatSession');
 const ChatMessage = require('../models/ChatMessage');
+const Order = require('../models/Order');
+const groqLLM = require('../utils/groqLLM.JS');
 
 // POST /api/chat
 router.post('/', async (req, res) => {
   try {
     const { userId, message, sessionId } = req.body;
 
-    // 1. Create a new session if sessionId is not provided
-    let session;
-    if (!sessionId) {
-      session = new ChatSession({ userId });
-      await session.save();
-    } else {
-      session = await ChatSession.findById(sessionId);
-      if (!session) return res.status(404).json({ error: 'Session not found' });
-    }
+    // 1. Get or create session
+    let session = sessionId
+      ? await ChatSession.findById(sessionId)
+      : new ChatSession({ userId });
+    if (!sessionId) await session.save();
 
-    // 2. Save user's message
-    const userMessage = new ChatMessage({
+    // 2. Save user message
+    const userMsg = new ChatMessage({
       sessionId: session._id,
       sender: 'user',
       message,
     });
-    await userMessage.save();
+    await userMsg.save();
 
-    // 3. Generate AI response (Dummy for now)
-    const aiResponseText = `You said: "${message}". Here's a helpful answer.`; // Placeholder
+    // 3. Gather previous messages
+    const historyDocs = await ChatMessage.find({ sessionId: session._id }).sort({ timestamp: 1 });
+    const messageHistory = historyDocs.map((msg) => ({
+      role: msg.sender === 'user' ? 'user' : 'assistant',
+      content: msg.message,
+    }));
 
-    const botMessage = new ChatMessage({
+    // 4. Add current user message
+    messageHistory.push({ role: 'user', content: message });
+
+    // 5. LLM generates a reply
+    let aiReply = await groqLLM(messageHistory);
+
+    // 6. If LLM determines an order ID is mentioned, try to fetch it
+    const orderIdMatch = message.match(/order\s*#?(\w+)/i);
+    if (orderIdMatch) {
+      const orderId = orderIdMatch[1];
+      const order = await Order.findOne({ orderId });
+
+      if (order) {
+        aiReply = `🔍 Order #${orderId} is currently **${order.status}**. Expected delivery: **${order.deliveryDate.toDateString()}**.`;
+      } else {
+        aiReply = `Sorry, I couldn't find any order with ID **${orderId}**. Can you double-check it?`;
+      }
+    }
+
+    // 7. Save bot message
+    const botMsg = new ChatMessage({
       sessionId: session._id,
       sender: 'bot',
-      message: aiResponseText,
+      message: aiReply,
     });
-    await botMessage.save();
+    await botMsg.save();
 
-    // 4. Return both messages
+    // 8. Respond
     res.json({
       sessionId: session._id,
-      userMessage,
-      botMessage,
+      userMessage: userMsg,
+      botMessage: botMsg,
     });
-  } catch (error) {
-    console.error('Error handling chat:', error);
+  } catch (err) {
+    console.error('Error in /api/chat:', err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
