@@ -1,12 +1,15 @@
-// src/components/MessageList.jsx
+// MessageList.jsx
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Message from './Message';
 
-const MessageList = ({ messages }) => {
+const MessageList = () => {
+  const messages = useSelector((state) => state.chat.messages);
+
   return (
-    <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2 bg-white">
+    <div className="flex flex-col space-y-3">
       {messages.map((msg, index) => (
-        <Message key={index} text={msg.text} sender={msg.sender} />
+        <Message key={index} sender={msg.sender} text={msg.text} />
       ))}
     </div>
   );
