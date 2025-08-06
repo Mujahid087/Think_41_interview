@@ -1,5 +1,3 @@
-Here’s your updated `README.md` based on your clarified project structure, Docker Compose usage, and the correct frontend/backend ports:
-
 ---
 
 ```markdown
