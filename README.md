@@ -1,9 +1,4 @@
 
----
-
-### 📦 `README.md`
-
-```md
 # 🧠 Customer Support Chatbot – eCommerce Clothing Site
 
 A full-stack AI-powered Customer Support Chatbot built for an eCommerce clothing website using React.js, Node.js, MongoDB, and Docker.
@@ -71,8 +66,8 @@ project-root/
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/Mujahid087/Think_41_interview
+   cd Think_41_interview
 ````
 
 2. Add your environment variables in `.env` files in `/backend` and `/frontend`.
