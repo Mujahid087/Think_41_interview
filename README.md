@@ -1,4 +1,8 @@
+Here’s your updated `README.md` based on your clarified project structure, Docker Compose usage, and the correct frontend/backend ports:
 
+---
+
+```markdown
 # 🧠 Customer Support Chatbot – eCommerce Clothing Site
 
 A full-stack AI-powered Customer Support Chatbot built for an eCommerce clothing website using React.js, Node.js, MongoDB, and Docker.
@@ -7,24 +11,24 @@ A full-stack AI-powered Customer Support Chatbot built for an eCommerce clothing
 
 ## 🚀 Features
 
-- 🔍 Searchable chat interface
-- 💬 Live chatbot with contextual understanding
-- 🕓 Conversation history panel
-- 🧾 Redux for global state management
-- 🧰 Tailwind CSS for modern UI
-- 🧠 Trained with clothing-related FAQs (CSV dataset)
-- 🔒 JWT-based authentication (Admin protected routes)
-- 🐳 Dockerized for deployment
+- 🔍 Searchable chat interface  
+- 💬 Live chatbot with contextual understanding  
+- 🕓 Conversation history panel  
+- 🧾 Redux for global state management  
+- 🧰 Tailwind CSS for modern UI  
+- 🧠 Trained with clothing-related FAQs (CSV dataset)  
+- 🔒 JWT-based authentication (Admin protected routes)  
+- 🐳 Dockerized with Docker Compose  
 
 ---
 
 ## 🏗️ Tech Stack
 
-- **Frontend**: React.js, Redux Toolkit, Tailwind CSS
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT
-- **Containerization**: Docker, Docker Compose
+- **Frontend**: React.js, Redux Toolkit, Tailwind CSS  
+- **Backend**: Node.js, Express.js  
+- **Database**: MongoDB  
+- **Authentication**: JWT  
+- **Containerization**: Docker & Docker Compose  
 
 ---
 
@@ -32,16 +36,14 @@ A full-stack AI-powered Customer Support Chatbot built for an eCommerce clothing
 
 ```
 
-project-root/
-│
-├── backend/
-│   ├── Dockerfile
-│   ├── .env
-│   └── ...
+Think\_41\_interview/
 │
 ├── frontend/
 │   ├── Dockerfile
-│   ├── .env
+│   └── ...
+│
+├── backend/
+│   ├── Dockerfile
 │   └── ...
 │
 ├── docker-compose.yml
@@ -55,9 +57,8 @@ project-root/
 
 ### 🔧 Prerequisites
 
-- Node.js & npm
-- Docker & Docker Compose
-- MongoDB (local or cloud)
+- Node.js & npm  
+- Docker & Docker Compose  
 
 ---
 
@@ -70,58 +71,25 @@ project-root/
    cd Think_41_interview
 ````
 
-2. Add your environment variables in `.env` files in `/backend` and `/frontend`.
-
-3. Start all services:
+2. Start all services:
 
    ```bash
    docker-compose up --build
    ```
 
-4. Visit the chatbot on:
+3. Access the application:
 
-   ```
-   http://localhost:3000
-   ```
-
----
-
-## 🧪 Environment Variables
-
-### `backend/.env`
-
-```env
-PORT=5000
-MONGO_URI=mongodb://mongo:27017/chatbotdb
-JWT_SECRET=your_secret_key
-```
-
-### `frontend/.env`
-
-```env
-VITE_API_URL=http://localhost:5000
-```
-
-> ✅ **Note**: `.env` files are excluded from Git using `.gitignore`.
+   * Frontend: [http://localhost:5173](http://localhost:5173)
+   * Backend API: [http://localhost:5000](http://localhost:5000)
 
 ---
 
-## 📂 Ignore Sensitive Files
-
-Make sure your root `.gitignore` includes:
-
-```bash
-.env
-**/.env
-```
-
----
-
-## 🛠️ Available Scripts
+## 🛠️ Available Scripts (for development)
 
 ### Frontend
 
 ```bash
+cd frontend
 npm install
 npm run dev
 ```
@@ -129,27 +97,22 @@ npm run dev
 ### Backend
 
 ```bash
+cd backend
 npm install
 npm run dev
 ```
 
 ---
 
-## 📸 UI Preview
-
-> Coming soon: Screenshots of the chatbot interface
-
----
-
 ## 📦 Docker Commands
 
-* Build and run:
+* Build and run containers:
 
   ```bash
   docker-compose up --build
   ```
 
-* Stop services:
+* Stop all containers:
 
   ```bash
   docker-compose down
@@ -157,19 +120,8 @@ npm run dev
 
 ---
 
-## 🙌 Author
 
-**Mujahid Mahedi**
-Backend & Full Stack Developer | MERN Stack | Python | MongoDB
-
----
-
-## 📝 License
-
-This project is open-source under the MIT License.
 
 ```
-
----
 
 ```
